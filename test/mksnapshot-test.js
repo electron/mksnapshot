@@ -49,7 +49,7 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      assert.equal(code, 1)
+      assert.notEqual(code, 0, 'Code was: ' + code)
       assert.notEqual(output.indexOf('Fatal error'), -1, output)
       assert.equal(fs.existsSync(outputFile), true)
       done()
