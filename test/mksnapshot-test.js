@@ -25,6 +25,7 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
+      assert.equal(typeof code, 'number')
       assert.equal(code, 0)
       assert.equal(output.indexOf('Loading script for embedding'), 0, output)
       assert.equal(fs.existsSync(outputFile), true)
@@ -49,7 +50,8 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      assert.notEqual(code, 0, 'Code was: ' + code)
+      assert.equal(typeof code, 'number')
+      assert.notEqual(code, 0)
       assert.notEqual(output.indexOf('Fatal error'), -1, output)
       assert.equal(fs.existsSync(outputFile), true)
       done()
