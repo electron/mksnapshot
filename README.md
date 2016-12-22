@@ -1,5 +1,7 @@
-# Electron Mksnapshot
+# Electron mksnapshot
 
+[![Travis Build Status](https://travis-ci.org/electron/mksnapshot.svg?branch=master)](https://travis-ci.org/electron/mksnapshot)
+<br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![devDependencies:?](https://img.shields.io/david/electron/mksnapshot.svg)](https://david-dm.org/electron/mksnapshot)
 <br>
