@@ -1,4 +1,4 @@
-var Decompress = require('decompress')
+var decompress = require('decompress')
 var fs = require('fs')
 var mkdirp = require('mkdirp')
 var path = require('path')
@@ -33,11 +33,11 @@ function handleError (url, error) {
 }
 
 function unzip (zipped, callback) {
-  var decompress = new Decompress()
-  decompress.src(zipped)
-  decompress.dest(config.outputPath)
-  decompress.use(Decompress.zip())
-  decompress.run(callback)
+  decompress(zipped, config.outputPath).then(function () {
+    callback()
+  }).catch(function (error) {
+    callback(error)
+  })
 }
 
 mkdirp(config.outputPath, function (error) {

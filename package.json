@@ -12,13 +12,13 @@
   },
   "license": "MIT",
   "dependencies": {
-    "decompress": "^3.0.0",
+    "decompress": "^4.0.0",
     "mkdirp": "^0.5.1",
-    "request": "^2.65.0"
+    "request": "^2.79.0"
   },
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "standard": "^5.3.1",
+    "mocha": "^3.2.0",
+    "standard": "^8.6.0",
     "temp": "^0.8.3"
   },
   "standard": {
