@@ -27,7 +27,7 @@ mksnapshot --help
 ## Custom Mirror
 
 You can set the `ELECTRON_MIRROR` or [`NPM_CONFIG_ELECTRON_MIRROR`](https://docs.npmjs.com/misc/config#environment-variables)
-environment variables to use a custom base URL for downloading ChromeDriver zips.
+environment variables to use a custom base URL for downloading mksnapshot zips.
 
 ```sh
 # Electron mirror for China
