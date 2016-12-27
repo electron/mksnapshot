@@ -18,8 +18,10 @@ electronDownload({
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
     if (error != null) throw error
 
-    fs.chmod(path.join(__dirname, 'bin', 'mksnapshot'), '755', function (error) {
-      if (error != null) throw error
-    })
+    if (process.platform !== 'win32') {
+      fs.chmod(path.join(__dirname, 'bin', 'mksnapshot'), '755', function (error) {
+        if (error != null) throw error
+      })
+    }
   })
 })
