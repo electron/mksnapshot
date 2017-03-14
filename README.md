@@ -1,7 +1,7 @@
 # Electron mksnapshot
 
 [![Travis Build Status](https://travis-ci.org/electron/mksnapshot.svg?branch=master)](https://travis-ci.org/electron/mksnapshot)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/o767qj8y9cxhpf36?svg=true)](https://ci.appveyor.com/project/Atom/mksnapshot)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/ugparq4awqbf4fq5/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/mksnapshot/branch/master)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![devDependencies:?](https://img.shields.io/david/electron/mksnapshot.svg)](https://david-dm.org/electron/mksnapshot)
