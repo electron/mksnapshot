@@ -25,10 +25,10 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      assert.equal(typeof code, 'number')
-      assert.equal(code, 0)
-      assert.equal(output.indexOf('Loading script for embedding'), 0, output)
-      assert.equal(fs.existsSync(outputFile), true)
+      assert.equal(typeof code, 'number', 'Exit code is a number')
+      assert.equal(code, 0, 'Exit code is not zero')
+      assert.equal(output.indexOf('Loading script for embedding'), 0, output, 'Output is correct')
+      assert.equal(fs.existsSync(outputFile), true, 'Output file exists.')
       done()
     })
 
@@ -50,10 +50,10 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      assert.equal(typeof code, 'number')
-      assert.notEqual(code, 0)
-      assert.notEqual(output.indexOf('Fatal error'), -1, output)
-      assert.equal(fs.existsSync(outputFile), true)
+      assert.equal(typeof code, 'number', 'Exit code is a number')
+      assert.notEqual(code, 0, 'Exit code is not zero')
+      assert.notEqual(output.indexOf('Fatal error'), -1, 'Output has fatal error')
+      assert.equal(fs.existsSync(outputFile), false, 'Output file does not exist.')
       done()
     })
 
