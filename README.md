@@ -14,9 +14,9 @@
 Simple node module to download the `mksnapshot` binaries compatible with
 Electron for creating v8 snapshots.
 
-This minor version of this library tracks the minor version of the Electron
-versions released. So if you are using Electron `1.4.x` you would want to use
-an `electron-mksnapshot` dependency of `~1.4.0` in your `package.json` file.
+The major version of this library tracks the major version of the Electron
+versions released. So if you are using Electron `2.0.x` you would want to use
+an `electron-mksnapshot` dependency of `~2.0.0` in your `package.json` file.
 
 ## Using
 
