@@ -2,26 +2,37 @@ var fs = require('fs')
 var path = require('path')
 var electronDownload = require('electron-download')
 var extractZip = require('extract-zip')
+var versionToDownload = require('./package').version
 
-var versionSegments = require('./package').version.split('.')
+function download (version, callback) {
+  electronDownload({
+    version: version,
+    mksnapshot: true,
+    platform: process.env.npm_config_platform,
+    arch: process.env.npm_config_arch,
+    strictSSL: process.env.npm_config_strict_ssl === 'true',
+    quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
+  }, callback)
+}
 
-electronDownload({
-  version: versionSegments[0] + '.' + versionSegments[1] + '.0',
-  mksnapshot: true,
-  platform: process.env.npm_config_platform,
-  arch: process.env.npm_config_arch,
-  strictSSL: process.env.npm_config_strict_ssl === 'true',
-  quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
-}, function (error, zipPath) {
-  if (error != null) throw error
-
+function processDownload (err, zipPath) {
+  if (err != null) throw err
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
     if (error != null) throw error
-
     if (process.platform !== 'win32') {
       fs.chmod(path.join(__dirname, 'bin', 'mksnapshot'), '755', function (error) {
         if (error != null) throw error
       })
     }
   })
+}
+
+download(versionToDownload, function (err, zipPath) {
+  if (err) {
+    var versionSegments = versionToDownload.split('.')
+    var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
+    download(baseVersion, processDownload)
+  } else {
+    processDownload(err, zipPath)
+  }
 })
