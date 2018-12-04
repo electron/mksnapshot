@@ -17,6 +17,4 @@ notifications:
     on_failure: change
 
 script:
-    - node mksnapshot.js `pwd`/test/fixtures/snapshot.js
-    - node mksnapshot.js `pwd`/test/fixtures/invalid.js
     - npm test
