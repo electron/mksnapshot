@@ -8,7 +8,7 @@ var describe = global.describe
 var it = global.it
 
 describe('mksnapshot binary', function () {
-  this.timeout(10000)
+  this.timeout(30000)
 
   it('creates a snapshot for a valid file', function (done) {
     var tempDir = temp.mkdirSync('mksnapshot-')
