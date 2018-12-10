@@ -22,8 +22,12 @@ an `electron-mksnapshot` dependency of `~2.0.0` in your `package.json` file.
 
 ```sh
 npm install --save-dev electron-mksnapshot
-mksnapshot --help
+mksnapshot.js file.js (--output_dir OUTPUT_DIR).
 ```
+Running mksnapshot.js will generate both a snapshot_blob.bin and v8_context_snapshot.bin files which
+are needed to use custom snapshots in Electron.
+If an output directory isn't specified, the current directory will be used.
+(Additional mksnapshot args except for --startup_blob are supported, run mksnapshot --help to see options)
 
 ## Custom Mirror
 

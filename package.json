@@ -1,6 +1,6 @@
 {
   "name": "electron-mksnapshot",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.10",
   "description": "Electron version of the mksnapshot binary",
   "repository": "https://github.com/electron/mksnapshot",
   "bin": {
@@ -13,16 +13,19 @@
   "license": "MIT",
   "dependencies": {
     "electron-download": "^4.1.0",
-    "extract-zip": "^1.6.5"
+    "extract-zip": "^1.6.5",
+    "temp": "^0.8.3"
   },
   "devDependencies": {
-    "mocha": "^3.2.0",
-    "standard": "^8.6.0",
-    "temp": "^0.8.3"
+    "mocha": "^5.2.0",
+    "standard": "^8.6.0"
   },
   "standard": {
     "ignore": [
       "test/fixtures"
     ]
+  },
+  "engines": {
+    "node": ">=8.5.0"
   }
 }
