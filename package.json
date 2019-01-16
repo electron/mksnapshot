@@ -14,6 +14,7 @@
   "dependencies": {
     "electron-download": "^4.1.0",
     "extract-zip": "^1.6.5",
+    "fs-extra": "^7.0.1",
     "temp": "^0.8.3"
   },
   "devDependencies": {

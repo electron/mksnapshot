@@ -1,22 +1,10 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
+const fs = require('fs-extra')
 const { spawnSync } = require('child_process')
 const path = require('path')
 const temp = require('temp').track()
 const workingDir = temp.mkdirSync('mksnapshot-workdir')
-
-/*
- * Copy mksnapshot files to temporary working directory because
- * v8_context_snapshot_generator expects to run everything from the same
- * directory.
- */
-function copyMksnapshotFiles (mksnapshotDir, workingDir) {
-  const mksnapshotFiles = fs.readdirSync(mksnapshotDir)
-  mksnapshotFiles.forEach(file => {
-    fs.copyFileSync(path.join(mksnapshotDir, file), path.join(workingDir, file))
-  })
-}
 
 function getBinaryPath (binary, binaryPath) {
   if (process.platform === 'win32') {
@@ -58,7 +46,11 @@ if (!mksnapshotArgs.includes('--turbo_instruction_scheduling')) {
 }
 
 const mksnapshotDir = path.join(__dirname, 'bin')
-copyMksnapshotFiles(mksnapshotDir, workingDir)
+
+// Copy mksnapshot files to temporary working directory because
+// v8_context_snapshot_generator expects to run everything from the same
+// directory.
+fs.copySync(mksnapshotDir, workingDir)
 
 const options = {
   cwd: workingDir,
