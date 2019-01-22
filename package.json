@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-download": "^4.1.0",
+    "electron-download": "git+https://github.com/visleaf/electron-download.git",
     "extract-zip": "^1.6.5",
     "temp": "^0.8.3"
   },
