@@ -55,7 +55,6 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      console.log('Output is', output)
       assert.equal(typeof code, 'number', 'Exit code is a number')
       assert.notEqual(code, 0, 'Exit code is not zero')
       assert.notEqual(output.indexOf('Fatal error'), -1, 'Output has fatal error')
@@ -64,6 +63,9 @@ describe('mksnapshot binary', function () {
       done()
     })
 
-    mksnapshot.on('error', done)
+    mksnapshot.on('error', function (code) {
+      console.log('error Output is', output)
+      done()
+    })
   })
 })
