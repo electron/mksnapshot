@@ -24,7 +24,7 @@ describe('mksnapshot binary', function () {
 
     var output = ''
     mksnapshot.stdout.on('data', function (data) { output += data })
-    mksnapshot.stderr.on('data', function (data) { output += data })
+    mksnapshot.stderr.on('data', function (data) { process.stdout.write(data); output += data })
 
     mksnapshot.on('close', function (code) {
       assert.equal(typeof code, 'number', 'Exit code is a number')
