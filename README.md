@@ -1,6 +1,5 @@
 # Electron mksnapshot
 
-[![Travis Build Status](https://travis-ci.org/electron/mksnapshot.svg?branch=master)](https://travis-ci.org/electron/mksnapshot)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/ugparq4awqbf4fq5/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/mksnapshot/branch/master)
 [![Linux and Mac Build Status](https://circleci.com/gh/electron/mksnapshot/tree/master.svg?style=shield)](https://circleci.com/gh/electron/mksnapshot/tree/master)
 <br>
