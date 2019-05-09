@@ -27,6 +27,9 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
+      if (code !== 0) {
+        console.log('Error calling mksnapshot', output)
+      }
       assert.equal(typeof code, 'number', 'Exit code is a number')
       assert.equal(code, 0, 'Exit code is not zero')
       assert.equal(output.indexOf('Loading script for embedding'), 0, output, 'Output is correct')
@@ -35,7 +38,10 @@ describe('mksnapshot binary', function () {
       done()
     })
 
-    mksnapshot.on('error', done)
+    mksnapshot.on('error', function (code) {
+      console.log('error Output is', output)
+      done()
+    })
   })
 
   it('fails for invalid JavaScript files', function (done) {
