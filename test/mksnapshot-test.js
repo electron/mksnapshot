@@ -30,11 +30,11 @@ describe('mksnapshot binary', function () {
       if (code !== 0) {
         console.log('Error calling mksnapshot', output)
       }
-      assert.equal(typeof code, 'number', 'Exit code is a number')
-      assert.equal(code, 0, 'Exit code is not zero')
-      assert.equal(output.indexOf('Loading script for embedding'), 0, output, 'Output is correct')
-      assert.equal(fs.existsSync(outputFile), true, 'Output file exists.')
-      assert.equal(fs.existsSync(v8ContextFile), true, 'V8 context file exists.')
+      assert.strictEqual(typeof code, 'number', 'Exit code is a number')
+      assert.strictEqual(code, 0, 'Exit code is not zero')
+      assert.strictEqual(output.indexOf('Loading script for embedding'), 0, output, 'Output is correct')
+      assert.strictEqual(fs.existsSync(outputFile), true, 'Output file exists.')
+      assert.strictEqual(fs.existsSync(v8ContextFile), true, 'V8 context file exists.')
       done()
     })
 
@@ -61,11 +61,11 @@ describe('mksnapshot binary', function () {
     mksnapshot.stderr.on('data', function (data) { output += data })
 
     mksnapshot.on('close', function (code) {
-      assert.equal(typeof code, 'number', 'Exit code is a number')
-      assert.notEqual(code, 0, 'Exit code is not zero')
-      assert.notEqual(output.indexOf('Fatal error'), -1, 'Output has fatal error')
-      assert.equal(fs.existsSync(outputFile), false, 'Output file does not exist.')
-      assert.equal(fs.existsSync(v8ContextFile), false, 'V8 context file does not exist.')
+      assert.strictEqual(typeof code, 'number', 'Exit code is a number')
+      assert.notStrictEqual(code, 0, 'Exit code is not zero')
+      assert.notStrictEqual(output.indexOf('Fatal error'), -1, 'Output has fatal error')
+      assert.strictEqual(fs.existsSync(outputFile), false, 'Output file does not exist.')
+      assert.strictEqual(fs.existsSync(v8ContextFile), false, 'V8 context file does not exist.')
       done()
     })
 
