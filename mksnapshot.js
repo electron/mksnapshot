@@ -16,8 +16,8 @@ function getBinaryPath (binary, binaryPath) {
 
 const args = process.argv.slice(2)
 if (args.length === 0 || args.includes('--help')) {
-  console.log(`Usage: mksnapshot file.js (--output_dir OUTPUT_DIR).  ` +
-    `Additional mksnapshot args except for --startup_blob are supported:`)
+  console.log('Usage: mksnapshot file.js (--output_dir OUTPUT_DIR).  ' +
+    'Additional mksnapshot args except for --startup_blob are supported:')
   args.push('--help')
 }
 const outDirIdx = args.indexOf('--output_dir')
@@ -73,7 +73,7 @@ if (args.includes('--help')) {
 }
 
 fs.copyFileSync(path.join(workingDir, 'snapshot_blob.bin'),
-                path.join(outputDir, 'snapshot_blob.bin'))
+  path.join(outputDir, 'snapshot_blob.bin'))
 
 const v8ContextGenCommand = getBinaryPath('v8_context_snapshot_generator', workingDir)
 const v8ContextGenArgs = [

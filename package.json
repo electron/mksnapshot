@@ -1,6 +1,6 @@
 {
   "name": "electron-mksnapshot",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "Electron version of the mksnapshot binary",
   "repository": "https://github.com/electron/mksnapshot",
   "bin": {
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "mocha": "^5.2.0",
-    "standard": "^8.6.0"
+    "standard": "^14.3.1"
   },
   "standard": {
     "ignore": [
