@@ -3,13 +3,16 @@ var path = require('path')
 var electronDownload = require('electron-download')
 var extractZip = require('extract-zip')
 var versionToDownload = require('./package').version
-
+var archToDownload = process.env.npm_config_arch
+if (archToDownload === 'arm64') {
+  archToDownload = 'arm64-x64'
+}
 function download (version, callback) {
   electronDownload({
     version: version,
     mksnapshot: true,
     platform: process.env.npm_config_platform,
-    arch: process.env.npm_config_arch,
+    arch: archToDownload,
     strictSSL: process.env.npm_config_strict_ssl === 'true',
     quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
   }, callback)
