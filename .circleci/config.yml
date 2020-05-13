@@ -40,23 +40,23 @@ jobs:
 
   install-test-osx:
     macos:
-        xcode: "9.0"
+        xcode: "11.1.0"
     steps:
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v2-mac-dependencies-{{ checksum "package.json" }}
+          - v1-mac-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
-          - v2-mac-dependencies-
+          - v1-mac-dependencies-
 
       - run: npm install
 
       - save_cache:
           paths:
             - node_modules
-          key: v2-mac-dependencies-{{ checksum "package.json" }}
+          key: v1-mac-dependencies-{{ checksum "package.json" }}
 
       # run tests!
       - run: node --version
