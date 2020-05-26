@@ -1,9 +1,9 @@
-var fs = require('fs')
-var path = require('path')
-var electronDownload = require('electron-download')
-var extractZip = require('extract-zip')
-var versionToDownload = require('./package').version
-var archToDownload = process.env.npm_config_arch
+const fs = require('fs')
+const path = require('path')
+const { downloadArtifact } = require('@electron/get')
+const extractZip = require('extract-zip')
+const versionToDownload = require('./package').version
+let archToDownload = process.env.npm_config_arch
 
 if (process.arch.indexOf('arm') === 0) {
   console.log(`WARNING: mksnapshot does not run on ${process.arch}. Download 
@@ -23,38 +23,43 @@ if (archToDownload && archToDownload.indexOf('arm') === 0) {
   }
 }
 
-function download (version, callback) {
-  electronDownload({
+function download (version) {
+  return downloadArtifact({
     version: version,
-    mksnapshot: true,
+    artifactName: 'mksnapshot',
     platform: process.env.npm_config_platform,
     arch: archToDownload,
-    strictSSL: process.env.npm_config_strict_ssl === 'true',
+    rejectUnauthorized: process.env.npm_config_strict_ssl === 'true',
     quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
-  }, callback)
+  })
 }
 
-function processDownload (err, zipPath) {
-  if (err != null) throw err
-  extractZip(zipPath, { dir: path.join(__dirname, 'bin') }, function (error) {
-    if (error != null) throw error
-    if (process.platform !== 'win32') {
-      var mksnapshotPath = path.join(__dirname, 'bin', 'mksnapshot')
+async function attemptDownload (version) {
+  try {
+    const targetFolder = path.join(__dirname, 'bin')
+    const zipPath = await download(version)
+    await extractZip(zipPath, { dir: targetFolder })
+    const platform = process.env.npm_config_platform || process.platform
+    if (platform !== 'win32') {
+      const mksnapshotPath = path.join(__dirname, 'bin', 'mksnapshot')
       if (fs.existsSync(mksnapshotPath)) {
-        fs.chmod(path.join(__dirname, 'bin', 'mksnapshot'), '755', function (error) {
+        fs.chmod(mksnapshotPath, '755', function (error) {
           if (error != null) throw error
         })
       }
     }
-  })
+  } catch (err) {
+    // attempt to fall back to semver minor
+    const parts = version.split('.')
+    const baseVersion = `${parts[0]}.${parts[1]}.0`
+
+    // don't recurse infinitely
+    if (baseVersion === version) {
+      throw err
+    } else {
+      await attemptDownload(baseVersion)
+    }
+  }
 }
 
-download(versionToDownload, function (err, zipPath) {
-  if (err) {
-    var versionSegments = versionToDownload.split('.')
-    var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
-    download(baseVersion, processDownload)
-  } else {
-    processDownload(err, zipPath)
-  }
-})
+attemptDownload(versionToDownload)

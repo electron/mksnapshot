@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-download": "^4.1.0",
+    "@electron/get": "^1.12.2",
     "extract-zip": "^2.0.0",
     "fs-extra": "^7.0.1",
     "temp": "^0.8.3"

@@ -41,6 +41,16 @@ ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
 # Example of requested URL: http://localhost:8080/1.2.0/mksnapshot-v1.2.0-darwin-x64.zip
 ELECTRON_MIRROR="http://localhost:8080/"
 ```
+
+## Overriding the version downloaded
+
+The version downloaded can be overriden by setting the `ELECTRON_CUSTOM_VERSION` environment variable.
+
+```sh
+# Install mksnapshot for Electron v8.3.0
+ELECTRON_CUSTOM_VERSION=8.3.0 npm install
+```
+
 ## Generating snapshots for ARM hardware
 
 If you need to generate snapshots for Linux on 32 bit ARM, Linux on ARM64, or Windows on ARM64 you will need to install a cross arch mksnapshot on an Intel x64 machine.  To do so, set the npm config `arch` to the proper arch and then run `npm install --save-dev electron-mksnapshot`.  For example:
