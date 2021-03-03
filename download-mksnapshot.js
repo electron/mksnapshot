@@ -13,7 +13,7 @@ if (process.arch.indexOf('arm') === 0 && process.platform !== 'darwin') {
 }
 
 if (archToDownload && archToDownload.indexOf('arm') === 0 && process.platform !== 'darwin') {
-    archToDownload += '-x64'  
+  archToDownload += '-x64'
 }
 
 function download (version) {
