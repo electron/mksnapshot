@@ -75,3 +75,10 @@ From an Intel x64 Windows OS run:
 npm config set arch arm64
 npm install --save-dev electron-mksnapshot
 ```
+
+### macOS on ARM64
+On macOS you can either run the cross arch mksnapshot directly on arm64 hardware or if you wish you can generate the snapshot on an Intel X64 macOS hardware via the following:
+```sh
+npm config set arch arm64
+npm install --save-dev electron-mksnapshot
+```
