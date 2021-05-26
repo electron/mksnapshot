@@ -7,6 +7,7 @@
     "mksnapshot": "./mksnapshot.js"
   },
   "scripts": {
+    "mksnapshot": "node ./mksnapshot.js",
     "install": "node ./download-mksnapshot.js",
     "test": "mocha && standard"
   },
