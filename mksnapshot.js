@@ -97,7 +97,7 @@ const mksnapshotCommand = getBinaryPath('mksnapshot', mksnapshotBinaryDir)
 const mksnapshotProcess = spawnSync(mksnapshotCommand, mksnapshotArgs, options)
 if (mksnapshotProcess.status !== 0) {
   let code = mksnapshotProcess.status
-  if (code == null && mksnapshotProcess.signal === 'SIGILL') {
+  if (code == null) {
     code = 1
   }
   console.log('Error running mksnapshot.')

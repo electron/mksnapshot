@@ -72,7 +72,7 @@ describe('mksnapshot binary', function () {
     mksnapshot.on('close', function (code) {
       assert.strictEqual(typeof code, 'number', 'Exit code is a number')
       assert.notStrictEqual(code, 0, 'Exit code is not zero')
-      assert.notStrictEqual(output.indexOf('Fatal error'), -1, 'Output has fatal error')
+      assert.notStrictEqual(output.indexOf('Error running mksnapshot.'), -1, 'Output has error message')
       assert.strictEqual(fs.existsSync(outputFile), false, 'Output file does not exist.')
       assert.strictEqual(fs.existsSync(v8ContextFile), false, 'V8 context file does not exist.')
       done()
