@@ -88,7 +88,7 @@ if (fs.existsSync(argsFile)) {
 }
 
 const options = {
-  cwd: workingDir,
+  cwd: mksnapshotBinaryDir,
   env: process.env,
   stdio: 'inherit'
 }
@@ -107,12 +107,21 @@ if (args.includes('--help')) {
   process.exit(0)
 }
 
-fs.copyFileSync(path.join(workingDir, 'snapshot_blob.bin'),
+fs.copyFileSync(path.join(mksnapshotBinaryDir, 'snapshot_blob.bin'),
   path.join(outputDir, 'snapshot_blob.bin'))
 
 const v8ContextGenCommand = getBinaryPath('v8_context_snapshot_generator', mksnapshotBinaryDir)
+let v8ContextFile = 'v8_context_snapshot.bin'
+if (process.platform === 'darwin') {
+  const targetArch = process.env.npm_config_arch || process.arch
+  if (targetArch === 'arm64') {
+    v8ContextFile = 'v8_context_snapshot.arm64.bin'
+  } else {
+    v8ContextFile = 'v8_context_snapshot.x86_64.bin'
+  }
+}
 const v8ContextGenArgs = [
-  `--output_file=${path.join(outputDir, 'v8_context_snapshot.bin')}`
+  `--output_file=${path.join(outputDir, v8ContextFile)}`
 ]
 
 const v8ContextGenOptions = {

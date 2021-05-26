@@ -13,7 +13,16 @@ describe('mksnapshot binary', function () {
   it('creates a snapshot for a valid file', function (done) {
     var tempDir = temp.mkdirSync('mksnapshot-')
     var outputFile = path.join(tempDir, 'snapshot_blob.bin')
-    var v8ContextFile = path.join(tempDir, 'v8_context_snapshot.bin')
+    let v8ContextFileName = 'v8_context_snapshot.bin'
+    if (process.platform === 'darwin') {
+      const targetArch = process.env.npm_config_arch
+      if (targetArch === 'arm64') {
+        v8ContextFileName = 'v8_context_snapshot.arm64.bin'
+      } else {
+        v8ContextFileName = 'v8_context_snapshot.x86_64.bin'
+      }
+    }
+    var v8ContextFile = path.join(tempDir, v8ContextFileName)
     var args = [
       path.join(__dirname, '..', 'mksnapshot.js'),
       path.join(__dirname, 'fixtures', 'snapshot.js'),

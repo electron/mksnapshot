@@ -81,4 +81,5 @@ On macOS you can either run the cross arch mksnapshot directly on arm64 hardware
 ```sh
 npm config set arch arm64
 npm install --save-dev electron-mksnapshot
+npm run mksnapshot ABSOLUTE_PATH_TO_FILE/file.js -- --output_dir ABSOLUTE_PATH_TO_OUTPUT_DIR
 ```
