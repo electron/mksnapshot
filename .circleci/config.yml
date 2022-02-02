@@ -7,7 +7,7 @@ jobs:
   install-test-linux:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -40,7 +40,7 @@ jobs:
 
   install-test-osx:
     macos:
-        xcode: "11.1.0"
+        xcode: "12.4.0"
     steps:
       - checkout
 
