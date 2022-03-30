@@ -1,6 +1,6 @@
 {
   "name": "electron-mksnapshot",
-  "version": "17.0.1",
+  "version": "18.0.0",
   "description": "Electron version of the mksnapshot binary",
   "repository": "https://github.com/electron/mksnapshot",
   "bin": {
@@ -28,6 +28,6 @@
     ]
   },
   "engines": {
-    "node": ">=8.5.0"
+    "node": ">=10.5.0"
   }
 }
