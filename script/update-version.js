@@ -3,10 +3,15 @@ const path = require('path')
 
 const versionFormat = /^(\d+\.)(\d+\.)(\d+)$/
 
+const normalizeVersion = (version = '') => {
+  return version.startsWith('v') ? version.slice(1) : version
+}
+
 async function updateVersion () {
-  const version = process.argv[2]
+  const version = normalizeVersion(process.argv[2])
   if (!versionFormat.test(version)) {
-    throw new Error(`Invalid version ${version}`)
+    console.error(`Invalid version ${version}`)
+    process.exit(1)
   }
 
   const PJ_PATH = path.join(__dirname, '..', 'package.json')
@@ -25,6 +30,7 @@ async function updateVersion () {
     console.log(`Updated package-lock.json version to ${version}`)
   } catch (e) {
     console.error('Failed to update mksnapshot version: ', e)
+    process.exit(1)
   }
 }
 
