@@ -4,10 +4,10 @@ skip_tags: true
 
 branches:
   only:
-    - master
+    - main
 
 environment:
-  nodejs_version: "10"
+  nodejs_version: "14"
 
 cache:
   - node_modules -> package.json
