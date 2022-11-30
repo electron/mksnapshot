@@ -7,8 +7,8 @@
 [![devDependencies:?](https://img.shields.io/david/electron/mksnapshot.svg)](https://david-dm.org/electron/mksnapshot)
 <br>
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
-[![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/packages/electron-mksnapshot)
-[![dependencies:?](https://img.shields.io/npm/dm/electron-mksnapshot.svg)](https://www.npmjs.com/packages/electron-mksnapshot)
+[![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
+[![dependencies:?](https://img.shields.io/npm/dm/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 
 Simple node module to download the `mksnapshot` binaries compatible with
 Electron for creating v8 snapshots.
