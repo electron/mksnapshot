@@ -58,8 +58,10 @@ if (fs.existsSync(argsFile)) {
   // Use args from args file if it is provided as these match what is used to generate the original snapshot
   const mksnapshotArgsFile = fs.readFileSync(argsFile, 'utf8')
   const newlineRegEx = /(\r\n|\r|\n)/g
+  const turboProfileRegEx = /--turbo-profiling/g
+  const builtinsRegEx = /.*builtins-pgo.*/g
   const mksnapshotArgsFromFile = mksnapshotArgsFile.split(newlineRegEx).filter((arg) => {
-    return (!arg.match(newlineRegEx) && arg !== '')
+    return (!arg.match(newlineRegEx) && !arg.match(turboProfileRegEx) && !arg.match(builtinsRegEx) && arg !== '')
   })
   const mksnapshotBinaryPath = path.parse(mksnapshotArgsFromFile[0])
   if (mksnapshotBinaryPath.dir) {
