@@ -15,7 +15,7 @@ describe('mksnapshot binary', function () {
     var outputFile = path.join(tempDir, 'snapshot_blob.bin')
     let v8ContextFileName = 'v8_context_snapshot.bin'
     if (process.platform === 'darwin') {
-      const targetArch = process.env.npm_config_arch
+      const targetArch = process.env.npm_config_arch || process.arch
       if (targetArch === 'arm64') {
         v8ContextFileName = 'v8_context_snapshot.arm64.bin'
       } else {
