@@ -46,10 +46,39 @@ jobs:
     steps:
       - install
       - test
+  release:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - run:
+          name: Obtain Publishing Credentials
+          command: npx @continuous-auth/circleci-oidc-github-auth@1.0.4
+      - run:
+          name: Update Version
+          command: node script/update-version.js << pipeline.git.tag >>
+      - run:
+          name: CFA Publish
+          command: node script/publish.js
 
 workflows:
-  test:
+  test_and_release:
     jobs:
       - test-linux
       - test-mac
       - test-windows
+      # TODO - enable
+      # - release:
+      #     requires:
+      #       - test-linux
+      #       - test-mac
+      #       - test-windows
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+      #     context: cfa-release
