@@ -1,12 +1,11 @@
 # Electron mksnapshot
 
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/ugparq4awqbf4fq5/branch/main?svg=true)](https://ci.appveyor.com/project/electron-bot/mksnapshot/branch/main)
-[![Linux and Mac Build Status](https://circleci.com/gh/electron/mksnapshot/tree/main.svg?style=shield)](https://circleci.com/gh/electron/mksnapshot/tree/main)
+[![CircleCI Status](https://circleci.com/gh/electron/mksnapshot/tree/main.svg?style=shield)](https://circleci.com/gh/electron/mksnapshot/tree/main)
+[![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 <br>
-[![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 [![dependencies:?](https://img.shields.io/npm/dm/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 
 Simple node module to download the `mksnapshot` binaries compatible with
