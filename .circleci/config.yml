@@ -15,6 +15,12 @@ commands:
           keys:
             - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
             - v1-dependencies-{{ arch }}
+      - when:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Update Version
+                command: node script/update-version.js << pipeline.git.tag >>
       - run: npm install
       - save_cache:
           paths:
@@ -52,14 +58,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update Version
+          command: node script/update-version.js << pipeline.git.tag >>
+      - run:
           name: Install Dependencies
           command: npm ci
       - run:
           name: Obtain Publishing Credentials
           command: npx @continuous-auth/circleci-oidc-github-auth@1.0.4
-      - run:
-          name: Update Version
-          command: node script/update-version.js << pipeline.git.tag >>
       - run:
           name: Confirm Version Updated
           command: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
