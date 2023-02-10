@@ -21,7 +21,14 @@ commands:
             - run:
                 name: Update Version
                 command: node script/update-version.js << pipeline.git.tag >>
-      - run: npm install
+            - run: npm install
+      - unless:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                command: npm install
+                environment:
+                  ELECTRON_MKSNAPSHOT_STABLE_FALLBACK: 1
       - save_cache:
           paths:
             - node_modules

@@ -46,6 +46,11 @@ function download (version) {
 async function attemptDownload (version) {
   // Fall back to latest stable if there is not a stamped version, for tests
   if (version === '0.0.0-development') {
+    if (!process.env.ELECTRON_MKSNAPSHOT_STABLE_FALLBACK) {
+      console.log('WARNING: mksnapshot in development needs the environment variable ELECTRON_MKSNAPSHOT_STABLE_FALLBACK set')
+      process.exit(1)
+    }
+
     const fetch = require('node-fetch')
     const releases = await fetch('https://releases.electronjs.org/releases.json').then(response => response.json())
     version = getLatestStable(releases).version
