@@ -86,15 +86,14 @@ workflows:
       - test-linux
       - test-mac
       - test-windows
-      # TODO - enable
-      # - release:
-      #     requires:
-      #       - test-linux
-      #       - test-mac
-      #       - test-windows
-      #     filters:
-      #       tags:
-      #         only: /^v.*/
-      #       branches:
-      #         ignore: /.*/
-      #     context: cfa-release
+      - release:
+          requires:
+            - test-linux
+            - test-mac
+            - test-windows
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          context: cfa-release
