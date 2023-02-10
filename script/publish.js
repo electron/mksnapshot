@@ -1,9 +1,10 @@
 // Publish the package in the CWD with an OTP code from CFA
-import { getOtp } from '@continuous-auth/client'
-import { spawnSync } from 'child_process'
+const { getOtp } = require('@continuous-auth/client')
+const { spawnSync } = require('child_process')
 
 async function publish () {
-  spawnSync('npm', ['publish', '--otp', await getOtp()])
+  const { status } = spawnSync('npm', ['publish', '--otp', await getOtp()])
+  process.exit(status)
 }
 
 publish()
