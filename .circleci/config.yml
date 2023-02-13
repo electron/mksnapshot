@@ -83,9 +83,18 @@ jobs:
 workflows:
   test_and_release:
     jobs:
-      - test-linux
-      - test-mac
-      - test-windows
+      - test-linux:
+          filters:
+            tags:
+              only: /.*/
+      - test-mac:
+          filters:
+            tags:
+              only: /.*/
+      - test-windows:
+          filters:
+            tags:
+              only: /.*/
       - release:
           requires:
             - test-linux
