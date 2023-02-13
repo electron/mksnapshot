@@ -15,7 +15,20 @@ commands:
           keys:
             - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
             - v1-dependencies-{{ arch }}
-      - run: npm install
+      - when:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Update Version
+                command: node script/update-version.js << pipeline.git.tag >>
+            - run: npm install
+      - unless:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                command: npm install
+                environment:
+                  ELECTRON_MKSNAPSHOT_STABLE_FALLBACK: 1
       - save_cache:
           paths:
             - node_modules
@@ -46,10 +59,41 @@ jobs:
     steps:
       - install
       - test
+  release:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      - checkout
+      - run:
+          name: Update Version
+          command: node script/update-version.js << pipeline.git.tag >>
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - run:
+          name: Obtain Publishing Credentials
+          command: npx @continuous-auth/circleci-oidc-github-auth@1.0.4
+      - run:
+          name: Confirm Version Updated
+          command: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
+      - run:
+          name: CFA Publish
+          command: node script/publish.js
 
 workflows:
-  test:
+  test_and_release:
     jobs:
       - test-linux
       - test-mac
       - test-windows
+      - release:
+          requires:
+            - test-linux
+            - test-mac
+            - test-windows
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          context: cfa-release

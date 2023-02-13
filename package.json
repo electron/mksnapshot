@@ -1,6 +1,6 @@
 {
   "name": "electron-mksnapshot",
-  "version": "22.0.0",
+  "version": "0.0.0-development",
   "description": "Electron version of the mksnapshot binary",
   "repository": "https://github.com/electron/mksnapshot",
   "bin": {
@@ -19,7 +19,10 @@
     "temp": "^0.8.3"
   },
   "devDependencies": {
+    "@continuous-auth/client": "^2.2.2",
     "mocha": "^10.1.0",
+    "node-fetch": "^2.6.9",
+    "semver": "^7.3.8",
     "standard": "^14.3.1"
   },
   "standard": {
