@@ -77,6 +77,12 @@ jobs:
           name: Confirm Version Updated
           command: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
       - run:
+          name: Set NPM Credentials
+          command: echo //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN} > .npmrc
+      - run:
+          name: Check NPM Credentials
+          command: npm whoami
+      - run:
           name: CFA Publish
           command: node script/publish.js
 
