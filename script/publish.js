@@ -3,8 +3,7 @@ const { getOtp } = require('@continuous-auth/client')
 const { spawnSync } = require('child_process')
 
 async function publish () {
-  const { status, stdout } = spawnSync('npm', ['publish', '--otp', await getOtp()])
-  if (status !== 0) console.log(stdout)
+  const { status } = spawnSync('npm', ['publish', '--otp', await getOtp()])
   process.exit(status)
 }
 

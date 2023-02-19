@@ -35,7 +35,6 @@ jobs:
         run: |
           git tag ${{ github.event.inputs.version }}
           git push origin ${{ github.event.inputs.version }}
-      # TODO - This creates a draft release at the moment
       - name: Create Release
         run: |
-          gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }} -d
+          gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}
