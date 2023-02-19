@@ -6,10 +6,14 @@ orbs:
 
 commands:
   install:
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
       - node/install:
-          node-version: "16.19.0"
-      - run: nvm use 16.19.0
+          node-version: << parameters.node-version >>
+      - run: nvm use << parameters.node-version >>
       - checkout
       - restore_cache:
           keys:
@@ -43,21 +47,36 @@ jobs:
   test-linux:
     docker:
       - image: cimg/base:stable
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
   test-mac:
     macos:
       xcode: "13.3.0"
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
   test-windows:
     executor:
       name: win/default
       shell: bash.exe
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
   release:
     docker:
@@ -90,22 +109,46 @@ workflows:
   test_and_release:
     jobs:
       - test-linux:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
           filters:
             tags:
               only: /.*/
       - test-mac:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
           filters:
             tags:
               only: /.*/
       - test-windows:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
           filters:
             tags:
               only: /.*/
       - release:
           requires:
-            - test-linux
-            - test-mac
-            - test-windows
+            - test-linux-18.14.0
+            - test-linux-16.19.0
+            - test-linux-14.19.0
+            - test-mac-18.14.0
+            - test-mac-16.19.0
+            - test-mac-14.19.0
+            - test-windows-18.14.0
+            - test-windows-16.19.0
+            - test-windows-14.19.0
           filters:
             tags:
               only: /^v.*/
