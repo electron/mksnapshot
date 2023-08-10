@@ -6,6 +6,10 @@
   "bin": {
     "mksnapshot": "./mksnapshot.js"
   },
+  "files": [
+    "./download-mksnapshot.js",
+    "./mksnapshot.js"
+  ],
   "scripts": {
     "mksnapshot": "node ./mksnapshot.js",
     "install": "node ./download-mksnapshot.js",
