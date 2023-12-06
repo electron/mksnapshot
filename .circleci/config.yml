@@ -3,6 +3,12 @@ version: 2.1
 orbs:
   node: electronjs/node@2.1.0
 
+executors:
+  macos:
+    macos:
+      xcode: "14.3.0"
+    resource_class: macos.x86.medium.gen2
+
 jobs:
   release:
     docker:
@@ -59,16 +65,16 @@ workflows:
             parameters:
               executor:
                 - node/linux
-                - node/macos
+                - macos
                 - node/windows
               node-version:
                 - '20.5.1'
                 - '18.17.0'
                 - '16.20.1'
                 - '14.21.3'
-            exclude:
-              - executor: node/macos
-                node-version: '14.21.3'
+            # exclude:
+            #   - executor: node/macos
+            #     node-version: '14.21.3'
           filters:
             tags:
               only: /.*/
