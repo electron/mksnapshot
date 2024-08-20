@@ -21,6 +21,9 @@ permissions:
 
 jobs:
   test:
+    defaults:
+      run:
+        shell: bash
     strategy:
       matrix:
         node-version:
