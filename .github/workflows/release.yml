@@ -7,36 +7,31 @@ on:
           description: Electron version to use with "v" prefix (e.g. v30.0.0)
           required: true
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
-  smoke_test:
+  test:
+    uses: ./.github/workflows/test.yml
+    with:
+      electron-version: ${{ github.event.inputs.version }}
+  release:
     runs-on: ubuntu-latest
+    needs: test
+    environment: npm
+    permissions:
+      id-token: write # for CFA and npm provenance
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - name: Setup Node.js
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
-          node-version: "20.10.0"
+          persist-credentials: false
+      - name: "Use Node.js ${{ matrix.node-version }}"
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: "20.16.0"
       - name: Update Version
         run: node script/update-version.js ${{ github.event.inputs.version }}
-      - name: Install Dependencies
-        run: npm i
-      - name: Run Tests
-        run: npm test
-  create_new_version:
-    runs-on: ubuntu-latest
-    needs: smoke_test
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      # Tag here, the CircleCI workflow will trigger on the new tag and do the CFA publish
-      - name: Push New Tag
-        run: |
-          git tag ${{ github.event.inputs.version }}
-          git push origin ${{ github.event.inputs.version }}
-      - name: Create Release
-        run: |
-          gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}
+      - name: Confirm Version Updated
+        run: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
+      - uses: continuousauth/action@4396fa3eb7c9790548b9e2b6e4f527df5b861add # v1.0.1
+        with:
+          project-id: ${{ secrets.CFA_PROJECT_ID }}
+          secret: ${{ secrets.CFA_SECRET }}
+          npm-token: ${{ secrets.NPM_TOKEN }}

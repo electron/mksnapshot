@@ -1,6 +1,6 @@
 # Electron mksnapshot
 
-[![CircleCI Status](https://circleci.com/gh/electron/mksnapshot/tree/main.svg?style=shield)](https://circleci.com/gh/electron/mksnapshot/tree/main)
+[![Test](https://github.com/electron/mksnapshot/actions/workflows/test.yml/badge.svg)](https://github.com/electron/mksnapshot/actions/workflows/test.yml)
 [![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
