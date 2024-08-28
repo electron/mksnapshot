@@ -54,6 +54,7 @@ jobs:
         env:
           CFA_PROJECT_ID: ${{ secrets.CFA_PROJECT_ID }}
           CFA_SECRET: ${{ secrets.CFA_SECRET }}
+          GITHUB_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
         run: node script/publish.js
       - name: Create Release
         env:
