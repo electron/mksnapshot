@@ -27,6 +27,8 @@ jobs:
         run: node script/update-version.js ${{ github.ref_name }}
       - name: Confirm Version Updated
         run: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
+      - name: Install Dependencies
+        run: npm ci
       - name: Obtain OIDC token
         id: oidc
         run: |
