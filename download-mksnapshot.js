@@ -5,27 +5,34 @@ const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
 let archToDownload = process.env.npm_config_arch
 
-function download (version) {
+function download(version) {
   return downloadArtifact({
     version: version,
     artifactName: 'mksnapshot',
     platform: process.env.npm_config_platform,
     arch: archToDownload,
     rejectUnauthorized: process.env.npm_config_strict_ssl === 'true',
-    quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
+    quiet:
+      ['info', 'verbose', 'silly', 'http'].indexOf(
+        process.env.npm_config_loglevel,
+      ) === -1,
   })
 }
 
-async function attemptDownload (version) {
+async function attemptDownload(version) {
   // Fall back to latest stable if there is not a stamped version, for tests
   if (version === '0.0.0-development') {
     if (!process.env.ELECTRON_MKSNAPSHOT_STABLE_FALLBACK) {
-      console.log('WARNING: mksnapshot in development needs the environment variable ELECTRON_MKSNAPSHOT_STABLE_FALLBACK set')
+      console.log(
+        'WARNING: mksnapshot in development needs the environment variable ELECTRON_MKSNAPSHOT_STABLE_FALLBACK set',
+      )
       process.exit(1)
     }
 
     const { ElectronVersions } = require('@electron/fiddle-core')
-    const versions = await ElectronVersions.create(undefined, { ignoreCache: true })
+    const versions = await ElectronVersions.create(undefined, {
+      ignoreCache: true,
+    })
     version = versions.latestStable.version
   }
 
@@ -36,7 +43,11 @@ async function attemptDownload (version) {
     process.exit(1)
   }
 
-  if (archToDownload && archToDownload.indexOf('arm') === 0 && process.platform !== 'darwin') {
+  if (
+    archToDownload &&
+    archToDownload.indexOf('arm') === 0 &&
+    process.platform !== 'darwin'
+  ) {
     archToDownload += '-x64'
   }
 

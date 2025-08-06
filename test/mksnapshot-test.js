@@ -27,13 +27,17 @@ describe('mksnapshot binary', function () {
       path.join(__dirname, '..', 'mksnapshot.js'),
       path.join(__dirname, 'fixtures', 'snapshot.js'),
       '--output_dir',
-      tempDir
+      tempDir,
     ]
     var mksnapshot = ChildProcess.spawn(process.execPath, args)
 
     var output = ''
-    mksnapshot.stdout.on('data', function (data) { output += data })
-    mksnapshot.stderr.on('data', function (data) { output += data })
+    mksnapshot.stdout.on('data', function (data) {
+      output += data
+    })
+    mksnapshot.stderr.on('data', function (data) {
+      output += data
+    })
 
     mksnapshot.on('close', function (code) {
       if (code !== 0) {
@@ -41,9 +45,18 @@ describe('mksnapshot binary', function () {
       }
       assert.strictEqual(typeof code, 'number', 'Exit code is a number')
       assert.strictEqual(code, 0, 'Exit code is not zero')
-      assert.strictEqual(output.indexOf('Loading script for embedding'), 0, output, 'Output is correct')
+      assert.strictEqual(
+        output.indexOf('Loading script for embedding'),
+        0,
+        output,
+        'Output is correct',
+      )
       assert.strictEqual(fs.existsSync(outputFile), true, 'Output file exists.')
-      assert.strictEqual(fs.existsSync(v8ContextFile), true, 'V8 context file exists.')
+      assert.strictEqual(
+        fs.existsSync(v8ContextFile),
+        true,
+        'V8 context file exists.',
+      )
       done()
     })
 
@@ -61,20 +74,36 @@ describe('mksnapshot binary', function () {
       path.join(__dirname, '..', 'mksnapshot.js'),
       path.join(__dirname, 'fixtures', 'invalid.js'),
       '--output_dir',
-      tempDir
+      tempDir,
     ]
     var mksnapshot = ChildProcess.spawn(process.execPath, args)
 
     var output = ''
-    mksnapshot.stdout.on('data', function (data) { output += data })
-    mksnapshot.stderr.on('data', function (data) { output += data })
+    mksnapshot.stdout.on('data', function (data) {
+      output += data
+    })
+    mksnapshot.stderr.on('data', function (data) {
+      output += data
+    })
 
     mksnapshot.on('close', function (code) {
       assert.strictEqual(typeof code, 'number', 'Exit code is a number')
       assert.notStrictEqual(code, 0, 'Exit code is not zero')
-      assert.notStrictEqual(output.indexOf('Error running mksnapshot.'), -1, 'Output has error message')
-      assert.strictEqual(fs.existsSync(outputFile), false, 'Output file does not exist.')
-      assert.strictEqual(fs.existsSync(v8ContextFile), false, 'V8 context file does not exist.')
+      assert.notStrictEqual(
+        output.indexOf('Error running mksnapshot.'),
+        -1,
+        'Output has error message',
+      )
+      assert.strictEqual(
+        fs.existsSync(outputFile),
+        false,
+        'Output file does not exist.',
+      )
+      assert.strictEqual(
+        fs.existsSync(v8ContextFile),
+        false,
+        'V8 context file does not exist.',
+      )
       done()
     })
 
