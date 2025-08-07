@@ -8,10 +8,10 @@ const workingDir = temp.mkdirSync('mksnapshot-workdir')
 const crossArchDirs = [
   'clang_x86_v8_arm',
   'clang_x64_v8_arm64',
-  'win_clang_x64'
+  'win_clang_x64',
 ]
 
-function getBinaryPath (binary, binaryPath) {
+function getBinaryPath(binary, binaryPath) {
   if (process.platform === 'win32') {
     return path.join(binaryPath, `${binary}.exe`)
   } else {
@@ -21,8 +21,10 @@ function getBinaryPath (binary, binaryPath) {
 
 const args = process.argv.slice(2)
 if (args.length === 0 || args.includes('--help')) {
-  console.log('Usage: mksnapshot file.js (--output_dir OUTPUT_DIR).  ' +
-    'Additional mksnapshot args except for --startup_blob are supported:')
+  console.log(
+    'Usage: mksnapshot file.js (--output_dir OUTPUT_DIR).  ' +
+      'Additional mksnapshot args except for --startup_blob are supported:',
+  )
   args.push('--help')
 }
 const outDirIdx = args.indexOf('--output_dir')
@@ -30,18 +32,22 @@ let outputDir = process.cwd()
 let mksnapshotArgs = args
 if (outDirIdx > -1) {
   mksnapshotArgs = args.slice(0, outDirIdx)
-  if (args.length >= (outDirIdx + 2)) {
-    outputDir = args[(outDirIdx + 1)]
-    if (args.length > (outDirIdx + 2)) {
+  if (args.length >= outDirIdx + 2) {
+    outputDir = args[outDirIdx + 1]
+    if (args.length > outDirIdx + 2) {
       mksnapshotArgs = mksnapshotArgs.concat(args.slice(outDirIdx + 2))
     }
   } else {
-    console.log('Error! Output directory argument given but directory not specified.')
+    console.log(
+      'Error! Output directory argument given but directory not specified.',
+    )
     process.exit(1)
   }
 }
 if (args.includes('--startup_blob')) {
-  console.log('--startup_blob argument not supported. Use --output_dir to specify where to output snapshot_blob.bin')
+  console.log(
+    '--startup_blob argument not supported. Use --output_dir to specify where to output snapshot_blob.bin',
+  )
   process.exit(1)
 }
 
@@ -60,16 +66,26 @@ if (fs.existsSync(argsFile)) {
   const newlineRegEx = /(\r\n|\r|\n)/g
   const turboProfileRegEx = /--turbo-profiling/g
   const builtinsRegEx = /.*builtins-pgo.*/g
-  const mksnapshotArgsFromFile = mksnapshotArgsFile.split(newlineRegEx).filter((arg) => {
-    return (!arg.match(newlineRegEx) && !arg.match(turboProfileRegEx) && !arg.match(builtinsRegEx) && arg !== '')
-  })
+  const mksnapshotArgsFromFile = mksnapshotArgsFile
+    .split(newlineRegEx)
+    .filter((arg) => {
+      return (
+        !arg.match(newlineRegEx) &&
+        !arg.match(turboProfileRegEx) &&
+        !arg.match(builtinsRegEx) &&
+        arg !== ''
+      )
+    })
   const mksnapshotBinaryPath = path.parse(mksnapshotArgsFromFile[0])
   if (mksnapshotBinaryPath.dir) {
     mksnapshotBinaryDir = path.join(workingDir, mksnapshotBinaryPath.dir)
   }
   mksnapshotArgs = mksnapshotArgs.concat(mksnapshotArgsFromFile.slice(1))
 } else {
-  mksnapshotArgs = mksnapshotArgs.concat(['--startup_blob', 'snapshot_blob.bin'])
+  mksnapshotArgs = mksnapshotArgs.concat([
+    '--startup_blob',
+    'snapshot_blob.bin',
+  ])
   if (!mksnapshotArgs.includes('--turbo_instruction_scheduling')) {
     mksnapshotArgs.push('--turbo_instruction_scheduling')
   }
@@ -92,7 +108,7 @@ if (fs.existsSync(argsFile)) {
 const options = {
   cwd: mksnapshotBinaryDir,
   env: process.env,
-  stdio: 'inherit'
+  stdio: 'inherit',
 }
 
 const mksnapshotCommand = getBinaryPath('mksnapshot', mksnapshotBinaryDir)
@@ -109,10 +125,15 @@ if (args.includes('--help')) {
   process.exit(0)
 }
 
-fs.copyFileSync(path.join(mksnapshotBinaryDir, 'snapshot_blob.bin'),
-  path.join(outputDir, 'snapshot_blob.bin'))
+fs.copyFileSync(
+  path.join(mksnapshotBinaryDir, 'snapshot_blob.bin'),
+  path.join(outputDir, 'snapshot_blob.bin'),
+)
 
-const v8ContextGenCommand = getBinaryPath('v8_context_snapshot_generator', mksnapshotBinaryDir)
+const v8ContextGenCommand = getBinaryPath(
+  'v8_context_snapshot_generator',
+  mksnapshotBinaryDir,
+)
 let v8ContextFile = 'v8_context_snapshot.bin'
 if (process.platform === 'darwin') {
   const targetArch = process.env.npm_config_arch || process.arch
@@ -123,17 +144,24 @@ if (process.platform === 'darwin') {
   }
 }
 const v8ContextGenArgs = [
-  `--output_file=${path.join(outputDir, v8ContextFile)}`
+  `--output_file=${path.join(outputDir, v8ContextFile)}`,
 ]
 
 const v8ContextGenOptions = {
   cwd: mksnapshotDir,
   env: process.env,
-  stdio: 'inherit'
+  stdio: 'inherit',
 }
-const v8ContextGenProcess = spawnSync(v8ContextGenCommand, v8ContextGenArgs, v8ContextGenOptions)
+const v8ContextGenProcess = spawnSync(
+  v8ContextGenCommand,
+  v8ContextGenArgs,
+  v8ContextGenOptions,
+)
 if (v8ContextGenProcess.status !== 0) {
-  console.log('Error running the v8 context snapshot generator.', v8ContextGenProcess)
+  console.log(
+    'Error running the v8 context snapshot generator.',
+    v8ContextGenProcess,
+  )
   process.exit(v8ContextGenProcess.status)
 }
 process.exit(0)
