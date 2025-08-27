@@ -22,7 +22,7 @@ jobs:
       - name: "Use Node.js ${{ matrix.node-version }}"
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
-          node-version: "20.16.0"
+          node-version: "20.17.0"
       - name: Update npm to version that supports trusted publishing
         run: npm install -g npm@^11.5.1
       - name: Update Version
