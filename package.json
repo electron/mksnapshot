@@ -2,9 +2,12 @@
   "name": "electron-mksnapshot",
   "version": "0.0.0-development",
   "description": "Electron version of the mksnapshot binary",
-  "repository": "https://github.com/electron/mksnapshot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electron/mksnapshot.git"
+  },
   "bin": {
-    "mksnapshot": "./mksnapshot.js"
+    "mksnapshot": "mksnapshot.js"
   },
   "files": [
     "./download-mksnapshot.js",
