@@ -54,6 +54,15 @@ jobs:
         run: echo "ELECTRON_MKSNAPSHOT_STABLE_FALLBACK=1" >> $GITHUB_ENV
       - name: Install Dependencies
         run: yarn install --immutable
+      - name: Bypass crash handler (Linux)
+        # The "fails for invalid JavaScript files" test deliberately feeds bad
+        # JS to mksnapshot, which CHECK-fails with SIGTRAP. Ubuntu runners pipe
+        # core_pattern into a crash handler that synchronously tears down the
+        # 43MB binary, stalling teardown long enough to blow the test timeout.
+        # Point core_pattern at a plain file name so the kernel skips the pipe
+        # handler entirely.
+        if: runner.os == 'Linux'
+        run: sudo sysctl -w kernel.core_pattern=core
       - name: Run Tests
         run: |
           node --version
