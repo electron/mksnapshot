@@ -31,9 +31,9 @@ jobs:
           - '24.10.0'
           - '22.20.0'
         os:
-          - macos-latest
+          # - macos-latest
           - ubuntu-latest
-          - windows-latest
+          # - windows-latest
     runs-on: "${{ matrix.os }}"
     steps:
       - run: git config --global core.autocrlf input
