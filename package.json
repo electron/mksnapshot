@@ -16,9 +16,9 @@
   "scripts": {
     "mksnapshot": "node ./mksnapshot.js",
     "install": "node ./download-mksnapshot.js",
-    "prettier": "prettier --single-quote --no-semi --check \"**/*.js\"",
-    "prettier:write": "prettier --single-quote --no-semi --write \"**/*.js\"",
-    "test": "mocha && npm run prettier"
+    "prettier": "prettier --single-quote --no-semi --check \"**/*.{js,mjs}\"",
+    "prettier:write": "prettier --single-quote --no-semi --write \"**/*.{js,mjs}\"",
+    "test": "node --test test/mksnapshot.test.mjs && npm run prettier"
   },
   "license": "MIT",
   "dependencies": {
@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "@electron/fiddle-core": "^1.3.0",
-    "mocha": "^10.1.0",
     "prettier": "^3.6.2",
     "semver": "^7.3.8"
   },
