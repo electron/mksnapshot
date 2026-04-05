@@ -50,6 +50,7 @@ jobs:
         run: echo "ELECTRON_MKSNAPSHOT_STABLE_FALLBACK=1" >> $GITHUB_ENV
       - name: Install Dependencies
         run: yarn install --immutable
+      - run: sudo sysctl kernel.core_pattern
       - name: Run Tests
         run: |
           node --version
