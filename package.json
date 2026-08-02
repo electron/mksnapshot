@@ -18,7 +18,7 @@
     "install": "node ./download-mksnapshot.js",
     "prettier": "prettier --single-quote --no-semi --check \"**/*.{js,mjs}\"",
     "prettier:write": "prettier --single-quote --no-semi --write \"**/*.{js,mjs}\"",
-    "test": "node --test test/mksnapshot.test.mjs && npm run prettier"
+    "test": "node --test test/mksnapshot.test.mjs test/download-mksnapshot.test.mjs && npm run prettier"
   },
   "license": "MIT",
   "dependencies": {
