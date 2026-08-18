@@ -49,9 +49,17 @@ The version downloaded can be overriden by setting the `ELECTRON_CUSTOM_VERSION`
 ELECTRON_CUSTOM_VERSION=8.3.0 npm install
 ```
 
+## 32-bit targets (Electron <= 43 only)
+
+Electron 44 dropped support for Windows 32-bit (ia32) and Linux 32-bit ARM (`armv7l`),
+so no mksnapshot binaries are published for those targets on Electron >= 44 and
+installing `electron-mksnapshot` for them will fail with an error. To generate
+snapshots for 32-bit targets, use `electron-mksnapshot` <= 43 — 32-bit targets
+remain supported until the Electron 43 line reaches end-of-life in January 2027.
+
 ## Generating snapshots for ARM hardware
 
-If you need to generate snapshots for Linux on 32 bit ARM, Linux on ARM64, or Windows on ARM64 you will need to install a cross arch mksnapshot on an Intel x64 machine.  To do so, set the npm config `arch` to the proper arch and then run `npm install --save-dev electron-mksnapshot`.  For example:
+If you need to generate snapshots for Linux on 32 bit ARM (Electron <= 43 only), Linux on ARM64, or Windows on ARM64 you will need to install a cross arch mksnapshot on an Intel x64 machine.  To do so, set the npm config `arch` to the proper arch and then run `npm install --save-dev electron-mksnapshot`.  For example:
 
 ### Linux on ARM64
 From an Intel x64 Linux OS run:
@@ -60,7 +68,7 @@ npm config set arch arm64
 npm install --save-dev electron-mksnapshot
 ```
 
-### Linux on 32 bit ARM 
+### Linux on 32 bit ARM (Electron <= 43 only)
 From an Intel x64 Linux OS run:
 ```sh
 npm config set arch armv7l
