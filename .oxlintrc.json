@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "unicorn", "oxc", "import", "node"],
+  "categories": { "correctness": "error" },
+  "env": { "node": true, "es2022": true },
+  "ignorePatterns": ["test/fixtures/"]
+}

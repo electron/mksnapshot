@@ -3,7 +3,6 @@
 [![Test](https://github.com/electron/mksnapshot/actions/workflows/test.yml/badge.svg)](https://github.com/electron/mksnapshot/actions/workflows/test.yml)
 [![npm:](https://img.shields.io/npm/v/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
 <br>
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 <br>
 [![dependencies:?](https://img.shields.io/npm/dm/electron-mksnapshot.svg)](https://www.npmjs.com/package/electron-mksnapshot)
